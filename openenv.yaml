@@ -1,0 +1,11 @@
+version: "1.0"
+name: "sre-triage-env"
+description: "An SRE log triage and remediation environment where agents analyze server logs and take actions to resolve system alerts."
+entrypoint: "env:SRETriageEnv"
+tasks:
+  - name: "task-1-ip-block"
+    description: "Easy: Identify and block an IP address causing a flood of 404 errors."
+  - name: "task-2-restart"
+    description: "Medium: Identify a service with a memory leak from the logs and restart it."
+  - name: "task-3-sql-inject"
+    description: "Hard: Trace a multi-step SQL injection attack, block the offending IP, and restart the compromised database service."

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sre-triage-env"
+version = "0.1.0"
+description = "SRE Log Triage OpenEnv Benchmark"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core>=0.1.0",
+    "pydantic>=2.0.0",
+    "openai>=1.0.0",
+    "fastapi",
+    "uvicorn"
+]
+
+[project.scripts]
+server = "server.app:main"

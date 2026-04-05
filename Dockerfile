@@ -2,15 +2,14 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy project files
+# Copy all your project files into the container
 COPY . .
 
-# Expose standard HF Space port
+# Install the project and its dependencies directly from pyproject.toml
+RUN pip install --no-cache-dir .
+
+# Expose the standard Hugging Face Space port
 EXPOSE 7860
 
-# Command to run openenv API server via its CLI
-CMD ["openenv", "serve", "--host", "0.0.0.0", "--port", "7860"]
+# Boot the FastAPI server exactly how openenv validate expects it
+CMD ["uvicorn", "server.app:app", "--host", "0.0.0.0", "--port", "7860"]

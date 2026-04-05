@@ -2,10 +2,6 @@ import os
 import uuid
 from typing import List
 from openenv.core.env_server import Environment, Action, Observation, State
-
-# ---------------------------------------------------------
-# Models (Pure Pydantic, no @dataclass)
-# ---------------------------------------------------------
 class SREAction(Action):
     command: str
     target: str
@@ -22,13 +18,9 @@ class SREState(State):
     episode_id: str = ""
     step_count: int = 0
 
-# ---------------------------------------------------------
-# Environment
-# ---------------------------------------------------------
 class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
     def __init__(self):
         super().__init__()
-        # Standard Pydantic instantiation
         self._state = SREState(episode_id="init", step_count=0)
         self.task_name = os.getenv("OPENENV_TASK", "task-1-ip-block")
         self.max_steps = 10
@@ -72,7 +64,7 @@ class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
             self.target_ip = "198.51.100.99"
             self.target_service = "db-service"
         else:
-            self.alerts = ["Unknown task."]
+            self.alerts = ["Unknown"]
 
     def reset(self, seed=None, episode_id=None, **kwargs) -> SREObservation:
         self._state.episode_id = episode_id or str(uuid.uuid4())
@@ -122,7 +114,7 @@ class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
                 
         elif action.command == "resolve_ticket":
             is_done = True
-            output = "Ticket resolution submitted. Evaluating..."
+            output = "Ticket resolution submitted. Evaluating:"
             self._evaluate_task()
             step_reward = self.score 
         else:

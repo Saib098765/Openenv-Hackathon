@@ -49,11 +49,10 @@ def get_model_action(client: OpenAI, obs_text: str) -> SREAction:
             ],
             temperature=0.2,
             max_tokens=150,
-            # Removed response_format={"type": "json_object"} to prevent HF API 400 errors
+            
         )
         text = (completion.choices[0].message.content or "").strip()
         
-        # Robustly strip out any markdown code blocks the LLM might have added
         text = re.sub(r"^```json\s*", "", text, flags=re.IGNORECASE | re.MULTILINE)
         text = re.sub(r"^```\s*", "", text, flags=re.MULTILINE).strip()
         
@@ -61,7 +60,6 @@ def get_model_action(client: OpenAI, obs_text: str) -> SREAction:
         return SREAction(command=data.get("command", "grep"), target=data.get("target", "error"))
         
     except Exception as exc:
-        # Print the actual error so we aren't flying blind!
         print(f"\n[DEBUG] LLM API/Parsing Error: {exc}\n", flush=True)
         return SREAction(command="resolve_ticket", target="error_parsing_llm")
 

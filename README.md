@@ -8,11 +8,6 @@ pinned: false
 app_port: 7860
 ---
 
-# SRE Log Triage OpenEnv Benchmark
-
-## Description and Motivation
-This environment models the real-world daily operations of Site Reliability Engineers (SREs). Agents are tasked with investigating server logs, diagnosing anomalies (like out-of-memory errors, brute-force attacks, or DDoS traffic), and taking concrete actions to restore system health. It forces an LLM to utilize multi-step reasoning, perform information retrieval (`grep`), and act surgically without breaking healthy services.
-
 ## Action Space
 - `command` (String): The action to execute (`grep`, `block_ip`, `restart_service`, `resolve_ticket`).
 - `target` (String): The payload for the command. 
@@ -28,7 +23,7 @@ This environment models the real-world daily operations of Site Reliability Engi
 2. **task-2-restart (Medium):** Identify the microservice exhibiting a memory leak and restart it.
 3. **task-3-sql-inject (Hard):** Observe an SQL injection attack in the logs, block the originating IP, AND restart the compromised database service.
 
-## Usage Instructions
+## Instructions
 1. Install dependencies: `pip install -r requirements.txt`
 2. Validate environment: `openenv validate`
 3. Run inference: 

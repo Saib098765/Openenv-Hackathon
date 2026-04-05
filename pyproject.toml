@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "sre-triage-env"
 version = "0.1.0"
-description = "SRE Log Triage OpenEnv Benchmark"
+description = "SRE Log Triage openenv"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

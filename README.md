@@ -1,3 +1,13 @@
+---
+title: SRE Log Triage OpenEnv
+emoji: 🛠️
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+app_port: 7860
+---
+
 # SRE Log Triage OpenEnv Benchmark
 
 ## Description and Motivation

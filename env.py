@@ -24,8 +24,7 @@ class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
         self._state = SREState(episode_id="init", step_count=0)
         self.task_name = os.getenv("OPENENV_TASK", "task-1-ip-block")
         self.max_steps = 10
-        self.score = 0.0
-        
+        self.score = 0.01 
         self.blocked_ips = set()
         self.restarted_services = set()
         self._setup_task()
@@ -71,7 +70,7 @@ class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
         self._state.step_count = 0
         self.blocked_ips.clear()
         self.restarted_services.clear()
-        self.score = 0.0
+        self.score = 0.01 
         self._setup_task()
         return self._get_observation("Environment initialized. Ready for commands.", False)
 
@@ -129,17 +128,18 @@ class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
         return self._get_observation(output, is_done)
 
     def _evaluate_task(self):
-    # Success = 0.95, Failure = 0.05, Partial = 0.50
+        success_score = 0.95
+        fail_score = 0.05
         if self.task_name == "task-1-ip-block":
-            self.score = 0.95 if getattr(self, 'target_ip', None) in self.blocked_ips else 0.05
+            self.score = success_score if getattr(self, 'target_ip', None) in self.blocked_ips else fail_score
         elif self.task_name == "task-2-restart":
-            self.score = 0.95 if getattr(self, 'target_service', None) in self.restarted_services else 0.05
+            self.score = success_score if getattr(self, 'target_service', None) in self.restarted_services else fail_score
         elif self.task_name == "task-3-sql-inject":
             has_ip = getattr(self, 'target_ip', None) in self.blocked_ips
             has_svc = getattr(self, 'target_service', None) in self.restarted_services
             if has_ip and has_svc:
-                self.score = 0.95
+                self.score = success_score
             elif has_ip or has_svc:
                 self.score = 0.50
             else:
-                self.score = 0.05
+                self.score = fail_score

@@ -1,11 +1,11 @@
 import os
 import uuid
 from openenv.core.env_server import Environment
-try:
-    from ..models import SREAction, SREObservation, SREState
-except ImportError:
-    from models import SREAction, SREObservation, SREState
 
+try:
+    from models import SREAction, SREObservation, SREState
+except ImportError:
+    from my_env.models import SREAction, SREObservation, SREState
 
 class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
     def __init__(self):

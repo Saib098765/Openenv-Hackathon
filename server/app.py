@@ -4,18 +4,15 @@ import argparse
 try:
     from openenv.core.env_server.http_server import create_app
 except Exception as e:
-    raise ImportError(
-        "openenv is required for the web interface. Install dependencies with 'uv sync'"
-    ) from e
+    raise ImportError("openenv is required") from e
 
 try:
-    from ..models import SREAction, SREObservation
-    from .my_env_environment import SRETriageEnv
-except ModuleNotFoundError:
     from models import SREAction, SREObservation
     from server.my_env_environment import SRETriageEnv
+except ModuleNotFoundError:
+    from my_env.models import SREAction, SREObservation
+    from my_env.server.my_env_environment import SRETriageEnv
 
-# Create the FastAPI app with your SRE Environment
 app = create_app(
     SRETriageEnv,
     SREAction,

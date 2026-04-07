@@ -173,4 +173,4 @@ printf "${GREEN}${BOLD}  Your submission is ready to submit.${NC}\n"
 printf "${BOLD}========================================${NC}\n"
 printf "\n"
 
-exit 0 
+exit 0

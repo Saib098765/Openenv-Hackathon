@@ -173,4 +173,6 @@ printf "${GREEN}${BOLD}  Your submission is ready to submit.${NC}\n"
 printf "${BOLD}========================================${NC}\n"
 printf "\n"
 
-exit 0
+exit 0 
+
+git remote set-url --push origin https://Saib00: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@huggingface.co/spaces/Saib00/Openenv-hackathon

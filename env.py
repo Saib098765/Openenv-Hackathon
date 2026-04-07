@@ -125,20 +125,21 @@ class SRETriageEnv(Environment[SREAction, SREObservation, SREState]):
             is_done = True
             self._evaluate_task()
 
-        self.score = min(max(self.score + step_reward, 0.0), 1.0)
+        self.score = min(max(self.score + step_reward, 0.01), 0.99)
         return self._get_observation(output, is_done)
 
     def _evaluate_task(self):
+    # Success = 0.95, Failure = 0.05, Partial = 0.50
         if self.task_name == "task-1-ip-block":
-            self.score = 1.0 if getattr(self, 'target_ip', None) in self.blocked_ips else 0.0
+            self.score = 0.95 if getattr(self, 'target_ip', None) in self.blocked_ips else 0.05
         elif self.task_name == "task-2-restart":
-            self.score = 1.0 if getattr(self, 'target_service', None) in self.restarted_services else 0.0
+            self.score = 0.95 if getattr(self, 'target_service', None) in self.restarted_services else 0.05
         elif self.task_name == "task-3-sql-inject":
             has_ip = getattr(self, 'target_ip', None) in self.blocked_ips
             has_svc = getattr(self, 'target_service', None) in self.restarted_services
             if has_ip and has_svc:
-                self.score = 1.0
+                self.score = 0.95
             elif has_ip or has_svc:
-                self.score = 0.5
+                self.score = 0.50
             else:
-                self.score = 0.0
+                self.score = 0.05

@@ -174,5 +174,3 @@ printf "${BOLD}========================================${NC}\n"
 printf "\n"
 
 exit 0 
-
-git remote set-url --push origin https://Saib00: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@huggingface.co/spaces/Saib00/Openenv-hackathon
